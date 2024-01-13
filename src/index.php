@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="ja">
     <head>
@@ -14,8 +15,28 @@
 ?>
 
 <h1>自分好みのオーダーを組もう！</h1>
-<p>※選手情報は2023シーズン終了時のものになります</p>
-<p>※選手は各チームの支配下選手のみとなります</p>
+<p>使い方は簡単！選手一覧から選手を追加するだけ！</p>
+<p>・選手情報は2023シーズン終了時のものになります</p>
+<p>・選手は各チームの支配下選手のみとなります</p>
+<p>・すでに同選手が追加されているか9人を超えている場合は追加されません</p>
+<?php
+if(isset($_SESSION['player'])){
+    echo '<table id="table-select" class="select">';
+    echo '<thead><tr><th>選手名</th><th>ポジション</th><th>打順</th><th>削除</th></tr></thead>';
+    foreach($_SESSION['player'] as $id => $player){
+        echo '<tbody id="select-tbody"><tr><td>',$player['name'],'</td>';
+        echo '<td><select onchange="changeList(this);">';
+        echo '<option>選択してください</option><option>投手</option><option>捕手</option><option>一塁手</option><option>二塁手</option>';
+        echo '<option>三塁手</option><option>遊撃手</option><option>左翼手</option><option>中堅手</option><option>右翼手</option><option>指名打者</option></select>';
+        echo '</td><td><button onclick="upList(this)">↑</button><button onclick="downList(this)">↓</button></td>';
+        echo '<td><a href="cart-delete.php?id=<?php echo $id; ?>">削除</a></td></tr>'
+    }
+    echo '</table>';
+
+}else{
+    echo '<h2>選手を追加してください</h2>';
+}
+    ?>
 <form method="get" action="index.php">
     <input type="text" name="keyword" placeholder="選手名を入力">
     <select name="team">
