@@ -16,9 +16,7 @@
 
         <h1>管理者画面</h1>
             <div class="insert"><a href="admin-insert.php"><button>選手情報追加<button></a><div>
-            <div class="update"><a href="admin-update.php"><button>選手情報更新<button></a><div>
-            <div class="delete"><a href="admin-delete.php"><button>選手情報削除<button></a><div>
-            
+            <div class="update"><a href="admin-update.php"><button>選手情報変更<button></a><div>            
 
     </body>
 </html>

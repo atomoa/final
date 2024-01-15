@@ -20,6 +20,7 @@ $connect = 'mysql:host=' . SERVER . ';dbname=' . DBNAME . ';charset=utf8';
 <p>・選手情報は2023シーズン終了時のものになります</p>
 <p>・選手は各チームの支配下選手のみとなります</p>
 <p>・すでに同選手が追加されているか9人を超えている場合は追加されません</p>
+<p><a href="admin/admin.php">・選手管理ページ</a></p>
 <?php
 if (isset($_SESSION['player'])) {
     echo '<table id="table-select" class="select">';
@@ -44,10 +45,26 @@ if (isset($_SESSION['player'])) {
 </form>
 <form action="index.php" method="post">
     <select name="team">
-        <!-- 省略 -->
+    <option value="">すべてのチーム</option>
+        <option value="tigers">阪神タイガース</option>
+        <option value="baystars">横浜DeNAベイスターズ</option>
+        <option value="carp">広島東洋カープ</option>
+        <option value="gians">読売ジャイアンツ</option>
+        <option value="swallows">東京ヤクルトスワローズ</option>
+        <option value="dragons">中日ドラゴンズ</option>
+        <option value="buffaloes">オリックス・バファローズ</option>
+        <option value="marines">千葉ロッテマリーンズ</option>
+        <option value="hawks">福岡ソフトバンクホークス</option>
+        <option value="eagles">東北楽天ゴールデンイーグルス</option>
+        <option value="lions">埼玉西武ライオンズ</option>
+        <option value="fighters">北海道日本ハムファイターズ</option>
     </select>
     <select name="position">
-        <!-- 省略 -->
+        <option value="">すべてのポジション</option>
+        <option value="catcher">捕手</option>
+        <option value="infielder">内野手</option>
+        <option value="outfielder">外野手</option>
+        <option value="pitcher">投手</option>
     </select>
     <input type="submit" value="検索">
 </form>
@@ -61,7 +78,7 @@ if (isset($_POST['keyword'])) {
     $sql = $pdo->prepare('select * from baseball where name like ?');
     $sql->execute(['%' . $_POST['keyword'] . '%']);
 } else if (isset($_POST['team']) || isset($_POST['position'])) {
-    $sql = $pdo->prepare('select * from baseball where team = ? and position = ?');
+    $sql = $pdo->prepare('select * from baseball where teamcode = ? and positioncode = ?');
     $sql->execute([$_POST['team'], $_POST['position']]);
 } else {
     $sql = $pdo->query('select * from baseball');
