@@ -78,7 +78,7 @@ if (isset($_POST['keyword'])) {
     $sql = $pdo->prepare('select * from baseball where name like ?');
     $sql->execute(['%' . $_POST['keyword'] . '%']);
 } else if (isset($_POST['team']) || isset($_POST['position'])) {
-    $sql = $pdo->prepare('select * from baseball where teamcode = ? and positioncode = ?');
+    $sql = $pdo->prepare('select * from baseball where teamcode = ? or positioncode = ?');
     $sql->execute([$_POST['team'], $_POST['position']]);
 } else {
     $sql = $pdo->query('select * from baseball');

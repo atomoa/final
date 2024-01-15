@@ -15,11 +15,12 @@
     ?>
     <h1>選手一覧</h1>
     <p><a href="admin.php">戻る</a></p>
-    <form method="post" action="admin-update.php">
+    <hr>
+    <form method="post" action="">
         <input type="text" name="keyword" placeholder="選手名を入力">
         <button type="submit">検索</button>
     </form>
-    <form action="admin-update.php" method="post">
+    <form action="" method="post">
         <select name="team">
             <option value="">すべてのチーム</option>
             <option value="tigers">阪神タイガース</option>
@@ -53,19 +54,21 @@
         $sql = $pdo->prepare('select * from baseball where name like ?');
         $sql->execute(['%' . $_POST['keyword'] . '%']);
     } else if (isset($_POST['team']) || isset($_POST['position'])) {
-        $sql = $pdo->prepare('select * from baseball where teamcode = ? and positioncode = ?');
+        $sql = $pdo->prepare('select * from baseball where teamcode = ? or positioncode = ?');
         $sql->execute([$_POST['team'], $_POST['position']]);
     } else {
         $sql = $pdo->query('select * from baseball');
     }
+    echo 'チーム名→',$_POST['team'],'</br>';
+    echo 'ポジション名→',$_POST['position'],'</br>';
     foreach ($sql as $row) {
         $id = $row['id'];
         echo '<tr>';
         echo '<td>', $row['name'], '</td>';
         echo '<td>', $row['team'], '</td>';
         echo '<td>', $row['position'], '</td>';
-        echo '<td><a href="admin-kousin.php">更新</a></td></tr>';
-        echo '<td><a href="admin-delete.php">削除</a></td></tr>';
+        echo '<td><a href="admin-kousin.php">更新</a></td>';
+        echo '<td><a href="admin-delete.php">削除</a></td>';
         echo '</tr>';
     }
     echo '</table>';

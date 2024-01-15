@@ -7,6 +7,7 @@
     <body>
         <h1>選手追加</h1>
         <p><a href="admin.php">戻る</a></p>
+        <hr>
         <p>追加したい選手の情報を入力してください</p>
         <form action="admin-insert-after.php" method="post">
             選手名：<input type="text" name="name">

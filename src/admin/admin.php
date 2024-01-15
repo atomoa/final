@@ -15,8 +15,10 @@
         ?>
 
         <h1>管理者画面</h1>
-            <div class="insert"><a href="admin-insert.php"><button>選手情報追加<button></a><div>
-            <div class="update"><a href="admin-update.php"><button>選手情報変更<button></a><div>            
+        <hr>
+            <div class="tuika"><a href="admin-insert.php">選手情報追加</a><div>
+            <div class="henkou"><a href="admin-update.php">選手情報変更</a><div>            
+            <div class="top"><a href="../index.php">ユーザー画面に戻る</a><div>            
 
     </body>
 </html>

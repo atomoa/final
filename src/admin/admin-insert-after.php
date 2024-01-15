@@ -39,7 +39,7 @@
             'infielder' => '内野手',
             'outfielder' => '外野手',
             'pitcher' => '投手',
-        )
+        );
 
         $pdo = new PDO($connect, USER, PASS);
 
@@ -53,15 +53,16 @@
     // パラメータのバインド
     $stmt->bindParam(':name', $name);
     $stmt->bindParam(':team', $team);
-    $stmt->bindParam(':teamcode', $teamCode);
+    $stmt->bindParam(':teamcode', $teamcode);
     $stmt->bindParam(':position', $position);
-    $stmt->bindParam(':positioncode', $positionCode);
+    $stmt->bindParam(':positioncode', $positioncode);
 
     // クエリの実行
     $stmt->execute();
 
     echo 'データが追加されました</br>';
-    echo '<a href="admin.php">管理者画面TOPに戻る</a>';
+    echo '<a href="admin.php">管理者画面TOPに戻る</a>'; 
+    echo '　｜　';
     echo '<a href="admin-insert.php">選手追加画面に戻る</a>';
 
     $pdo = null;
@@ -76,7 +77,7 @@
 
     // ポジションからポジションコードを取得する関数
     function getPositionCode($positionName) {
-        global $$positionCodes;
+        global $positionCodes;
 
         return isset($positionCodes[$positionName]) ? $positionCodes[$positionName] : '';
     }
