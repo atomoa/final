@@ -38,3 +38,7 @@ button {
 button:hover {
     background-color: #3367d6;
 }
+
+.bun{
+    text-align: center;
+}
