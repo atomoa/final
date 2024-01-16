@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>NPB TeamMade</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <?php
@@ -20,7 +21,9 @@ $connect = 'mysql:host=' . SERVER . ';dbname=' . DBNAME . ';charset=utf8';
 <p>・選手情報は2023シーズン終了時のものになります</p>
 <p>・選手は各チームの支配下選手のみとなります</p>
 <p>・すでに同選手が追加されているか9人を超えている場合は追加されません</p>
+<p>・すべての選手を調べたいときは選手名検索に何も打たないで検索してください</p>
 <p><a href="admin/admin.php">・選手管理ページ</a></p>
+<hr>
 <?php
 if (isset($_SESSION['player'])) {
     echo '<table id="table-select" class="select">';
@@ -35,17 +38,19 @@ if (isset($_SESSION['player'])) {
         echo '<td><a href="player-delete.php?id=', $id, '">削除</a></td></tr>';
     }
     echo '</tbody></table>';
+    echo '<a href="player-reset.php">リセットする</a><hr>';
 } else {
-    echo '<h2>選手を追加してください</h2>';
+    echo '<h2>選手を追加してください</h2><hr>';
 }
 ?>
 <form method="post" action="index.php">
+    選手名で検索する：
     <input type="text" name="keyword" placeholder="選手名を入力">
     <button type="submit">検索</button>
 </form>
 <form action="index.php" method="post">
+    チームで検索する：
     <select name="team">
-    <option value="">すべてのチーム</option>
         <option value="tigers">阪神タイガース</option>
         <option value="baystars">横浜DeNAベイスターズ</option>
         <option value="carp">広島東洋カープ</option>
@@ -59,8 +64,11 @@ if (isset($_SESSION['player'])) {
         <option value="lions">埼玉西武ライオンズ</option>
         <option value="fighters">北海道日本ハムファイターズ</option>
     </select>
+    <input type="submit" value="検索">
+</form>
+<form action="index.php" method="post">
+ポジションで検索する：
     <select name="position">
-        <option value="">すべてのポジション</option>
         <option value="catcher">捕手</option>
         <option value="infielder">内野手</option>
         <option value="outfielder">外野手</option>
@@ -71,15 +79,18 @@ if (isset($_SESSION['player'])) {
 <hr>
 <?php
 echo '<table>';
-echo '<tr><th>選手名</th><th>チーム</th><th>ポジション</th></tr>';
+echo '<tr><th>選手名</th><th>チーム</th><th>ポジション</th><th>追加</th></tr>';
 $pdo = new PDO($connect, USER, PASS);
 
 if (isset($_POST['keyword'])) {
     $sql = $pdo->prepare('select * from baseball where name like ?');
     $sql->execute(['%' . $_POST['keyword'] . '%']);
-} else if (isset($_POST['team']) || isset($_POST['position'])) {
-    $sql = $pdo->prepare('select * from baseball where teamcode = ? or positioncode = ?');
-    $sql->execute([$_POST['team'], $_POST['position']]);
+} else if (isset($_POST['team'])) {
+    $sql = $pdo->prepare('select * from baseball where teamcode = ?');
+    $sql->execute([$_POST['team']]);
+} else if (isset($_POST['position'])) {
+    $sql = $pdo->prepare('select * from baseball where positioncode = ?');
+    $sql->execute([$_POST['position']]);
 } else {
     $sql = $pdo->query('select * from baseball');
 }
@@ -89,7 +100,11 @@ foreach ($sql as $row) {
     echo '<td>', $row['name'], '</td>';
     echo '<td>', $row['team'], '</td>';
     echo '<td>', $row['position'], '</td>';
-    echo '<td><a href="player-insert.php?id=', $id, '">追加</a></td></tr>';
+    echo '<td><form action="player-insert.php" method="post">';
+    echo '<input type="hidden" name="id" value="', $id ,'">';
+    echo '<input type="hidden" name="name" value="', $row['name'] ,'">';
+    echo '<button type="submit">追加</button>';
+    echo '</form></td>';
     echo '</tr>';
 }
 echo '</table>';
