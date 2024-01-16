@@ -3,6 +3,7 @@
     <head>
 	<meta charset="UTF-8">
 	<title>管理者画面</title>
+    <link rel="stylesheet" href="css/style-update.css">
     </head>
     <body>
     <?php
@@ -21,7 +22,7 @@
         <input type="text" name="keyword" placeholder="選手名を入力">
         <button type="submit">検索</button>
     </form>
-    <form action="index.php" method="post">
+    <form action="" method="post">
     チームで検索する：
     <select name="team">
         <option value="tigers">阪神タイガース</option>

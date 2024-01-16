@@ -3,6 +3,7 @@
     <head>
 	<meta charset="UTF-8">
 	<title>管理者画面</title>
+    <link rel="stylesheet" href="css/style-insert.css">
     </head>
     <body>
         <h1>選手追加</h1>

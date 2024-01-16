@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>管理者画面</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <?php
@@ -61,10 +62,10 @@
         // クエリの実行
         $stmt->execute();
 
-        echo 'データが更新されました</br>';
+        echo '<div class="rink">データが更新されました</br>';
         echo '<a href="admin.php">管理者画面TOPに戻る</a>';
         echo '　｜　';
-        echo '<a href="admin-insert.php">選手一覧画面に戻る</a>';
+        echo '<a href="admin-update.php">選手一覧画面に戻る</a></div>';
 
         $pdo = null;
 
