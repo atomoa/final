@@ -15,14 +15,15 @@ const PASS = 'Pass0925';
 
 $connect = 'mysql:host=' . SERVER . ';dbname=' . DBNAME . ';charset=utf8';
 ?>
-
+<div class="header">
+    <div class="header-name">NPB TeamMade</div>
+</div>
 <h1>自分好みのオーダーを組もう！</h1>
 <p>使い方は簡単！選手一覧から選手を追加するだけ！</p>
 <p>・選手情報は2023シーズン終了時のものになります</p>
 <p>・選手は各チームの支配下選手のみとなります</p>
 <p>・すでに同選手が追加されているか9人を超えている場合は追加されません</p>
 <p>・すべての選手を調べたいときは選手名検索に何も打たないで検索してください</p>
-<p><a href="admin/admin.php">・選手管理ページ</a></p>
 <hr>
 <?php
 if (isset($_SESSION['player'])) {
